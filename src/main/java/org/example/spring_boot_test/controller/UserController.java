@@ -1,9 +1,7 @@
 package org.example.spring_boot_test.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.example.spring_boot_test.model.User;
 import org.example.spring_boot_test.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +12,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequiredArgsConstructor
 public class UserController {
-    @Autowired
     private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
 
     @GetMapping("/")
     public String getAll(ModelMap model) {
@@ -39,7 +40,7 @@ public class UserController {
 
     @PostMapping("/delete")
     public String delete(@RequestParam("id") long id) {
-        userService.delete(id);
+        userService.deleteById(id);
         return "redirect:/";
     }
 
